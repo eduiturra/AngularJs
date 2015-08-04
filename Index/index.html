@@ -1,0 +1,161 @@
+<!doctype html>
+
+<html ng-app="tienda" >
+    <head>
+    <meta charset="utf-8">  
+        <title>Instalando AngularJs</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.4.3/angular-route.min.js"></script>
+
+        <style>
+           .angular
+            {
+                background: red;
+                margin-left: 100px;
+                
+            }
+        </style>
+    </head>
+    
+    <body>
+    <div ng-controller="personController">
+    <h1>Curso Angular</h1>
+    <input type="text" ng-model="cantidad">
+    <br>
+     Precio Total: {{cantidad * precio | currency}}
+    </div>
+        
+        
+    <div ng-controller="controlador">
+        <input type="text" ng-model="diametro" >
+        <button ng-click="carcularCircunferencia()">Carcular</button>
+        <button ng-dblclick="carcularCircunferencia()">Carcular</button>
+        <button ng-mouseleave="carcularCircunferencia()" ng-mouseenter="carcularCircunferencia2()">Carcular</button>
+        {{circunferencia}}
+    </div>  
+        
+    <div ng-controller="controlador2">
+        <ul>
+          <li ng-repeat="nombreindividual in Nombres ">
+            {{nombreindividual}}
+          </li>
+        </ul>    
+    </div>   
+        
+    <div ng-controller="controlador2">
+        <label>Buscar</label>
+        <input type="search" ng-model="busqueda">
+         <p ng-repeat="nombreindividual2 in Nombres2 | filter : busqueda">
+            {{nombreindividual2.nombr}} {{nombreindividual2.ape}}
+         </p>
+    </div> 
+        
+        
+    <div ng-controller="controlador3">
+        
+        <p ng-style="estilos">Yo controlo el estilo<span ng-class="claseEspecial">Clase</span></p>
+        <button ng-click ="cambiarPropiedades()">Cambiar Propiedad</button>
+        <button ng-click ="cambiarClases()">Cambiar Clase</button>
+        <button ng-click ="reiniciar()">Reiniciar</button>
+    </div>    
+        
+     <div ng-controller="controlador4">
+       <button ng-click ="ocultar()">Ocultar</button>
+       <button ng-click ="mostrar()">Mostrar</button>
+       <div class="alerta" ng-show="visibilidad">
+           
+           Este es un mensaje secreto
+         
+        </div>
+    </div>  
+        
+        
+     <div ng-controller="controlador5">
+         <img ng-src="{{imagenActual}}">
+       <button ng-click ="mostrarImagen('2.png')">Imagen1</button>
+       <button ng-click ="mostrarImagen('3.png')">Imagen2</button>
+       
+           
+       
+    </div>      
+        
+        
+    <div ng-include src=" 'cabezera.html' ">   
+             
+    </div>    
+        
+        
+    <script>
+        var Aplicacion = angular.module("tienda",[]);                        
+        Aplicacion.controller("personController", function($scope) {
+        $scope.precio = 2;
+        $scope.cantidad= 0;
+        });  
+            
+        Aplicacion.controller("controlador", function($scope) {
+        var pi=3.14;    
+        $scope.carcularCircunferencia = function()
+        {
+           $scope.circunferencia=$scope.diametro * pi;  
+        }
+        
+         $scope.carcularCircunferencia2 = function()
+        {
+           $scope.circunferencia='hola';  
+        }
+        });  
+            
+        Aplicacion.controller("controlador2", function($scope) {
+        $scope.Nombres=["Eduardo","Octavio","Mauricio"];
+        $scope.Nombres2=[{nombr:"hola",ape:"itu"},
+        {nombr:"hola2",ape:"itu1"},
+        {nombr:"hola3",ape:"itu2"},
+        {nombr:"hola4",ape:"itu3"},
+        {nombr:"hola5",ape:"itu4"},
+        {nombr:"hola6",ape:"itu5"},
+        {nombr:"hola7",ape:"itu6"}];
+        });        
+        
+        Aplicacion.controller("controlador3", function($scope) {
+            $scope.cambiarPropiedades = function(){   
+            $scope.estilos = {"background" : "blue"}
+          }
+            $scope.cambiarClases = function(){ 
+                $scope.claseEspecial = "angular";
+            }
+            
+            $scope.reiniciar = function(){ 
+                $scope.estilos = "";
+                $scope.claseEspecial = "";
+            }
+        }); 
+        
+        
+         Aplicacion.controller("controlador4", function($scope) {
+             $scope.visibilidad = false;
+              $scope.mostrar = function()
+              {
+                   $scope.visibilidad = true;
+              }
+               $scope.ocultar = function()
+              {
+                   $scope.visibilidad = false;
+              }
+          });      
+        
+        
+        
+          Aplicacion.controller("controlador5", function($scope) {
+             $scope.imagenActual= '1.jpg';
+              $scope.mostrarImagen = function(_imagen)
+              {
+                   $scope.imagenActual = _imagen;
+              }
+              
+          });   
+             
+             
+             
+    </script>
+    </body>
+</html>
