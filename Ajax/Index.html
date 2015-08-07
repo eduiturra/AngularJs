@@ -1,0 +1,55 @@
+<html ng-app="MyFirstApp">
+<head>
+<meta charset="utf-8">  
+<title>Instalando AngularJs</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.4.3/angular-route.min.js"></script>
+</head>
+    
+    
+<body ng-controller="FirstController">
+    <input type="text" ng-model="newPost.title">
+    <br>
+    <textarea ng-model="newPost.body"></textarea>
+    <button ng-click="addPost()">Enviar</button>
+    <ul>
+        <li ng-repeat="post in posts">
+            <h2>{{post.title}}</h2>
+                <p>{{post.body}}</p>
+        </li>
+
+    </ul>
+    
+</body>    
+    
+<script>
+    angular.module("MyFirstApp",[])
+     .controller("FirstController",function($scope,$http){
+       $scope.posts = [];
+        $scope.newPosts = {};
+       $http.get("http://jsonplaceholder.typicode.com/postscd")
+        .success(function(data){
+           console.log(data);
+         $scope.posts = data;  
+       })
+            .error(function(err){
+           
+       });
+        
+    $scope.addPost = function(){
+         $http.post("http://jsonplaceholder.typicode.com/posts",{
+           title: $scope.newPost.title,
+            body: $scope.newPost.body,
+             userId: 1
+         })
+          .success(function(data,status,header,config){
+                $scope.posts.push($scope.newPost);
+                $scope.newPosts = {};
+           })
+                .error(function(error,status,header,config){
+                    console.log(error);
+           });
+        }
+    });
+</script>    
+</html>
